@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "FaturaListExcel";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>FaturaListExcel</h1>
+<br />
+@*<button class="btn btn-primary" onclick="DownloadExcelFaturaList">Excel İndir</button>*@
+<a href="/Admin/Fatura/ExportStaticExcelFaturaList" class="btn btn-primary">Excel İndir</a>
+@*<script>
+    function DownloadExcelFaturaList() {
+        window.open("/Admin/Fatura/ExportStaticExcelFaturaList");
+    }
+</script>*@

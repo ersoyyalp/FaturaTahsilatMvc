@@ -1,0 +1,183 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    @model List<FaturaBilgi>
+
+    @{ decimal toplamFiyat = 0;
+        string faturaIds = "";
+
+        if (Model != null)
+        {
+            toplamFiyat = Model.Sum(I => I.Fiyat);
+
+            List<int> vs = Model.Select(x => x.Id).ToList();
+            for (int i = 0; i < vs.Count; i++)
+            {
+                if (i == 0)
+                    faturaIds += vs[i];
+                else
+                    faturaIds += $",{vs[i]}";
+            }
+
+        } }
+    <div class="container mt-5 d-flex justify-content-center">
+
+        <div class="card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+
+
+            </div>
+            <div class="pt-4">
+                <label class="d-flex justify-content-between"> <span class="label-text label-text-cc-number">Kart Sahibi Adı</span></label>
+                <input type="tel" name="credit-number" class="form-control credit-card-number" maxlength="19" placeholder="Ad Soyad">
+            </div>
+
+            <div class="pt-4">
+                <label class="d-flex justify-content-between"> <span class="label-text label-text-cc-number">Kart Numarası</span></label>
+                <input type="tel" name="credit-number" class="form-control credit-card-number" maxlength="19" placeholder="Kart Numarası">
+            </div>
+
+
+            <div class="d-flex justify-content-between pt-4">
+
+                <div>
+                    <label><span class="label-text">Son Kullanma Tarihi</span>	</label>
+                    <input type="date" name="expiry-date" class="form-control expiry-class" placeholder="AY / YIL">
+
+                </div>
+
+                <div>
+                    <label><span class="label-text">CVV</span></label>
+                    <input type="tel" name="cvv-number" class="form-control cvv-class" maxlength="4" pattern="\d*">
+
+                </div>
+
+            </div>
+
+
+
+            <div class="d-flex justify-content-between pt-5 align-items-center">
+
+                <button type="button" class="btn btn-danger" asp-action="Sepet" asp-controller="Home">Geri Dön</button>
+
+                <button type="button" class="btn payment-btn" asp-action="Index" asp-controller="Home">Ödeme Yap</button>
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+</body>
+</html>
+<style>
+    body {
+        background-color: #b4e9ea;
+    }
+
+    .card {
+        width: 340px;
+        border-radius: 35px;
+        background-color: #b4e9ea;
+        box-shadow: 0 4px 8px 0 #0d8fa9, 0 6px 20px 0 #0d8fa9;
+    }
+
+
+
+    .label-text {
+        font-size: 16px;
+        font-weight: 600;
+        color: #0d8fa9;
+    }
+
+    .credit-card-number {
+        width: 290px;
+        z-index: 28;
+        border: 2px solid #ced4da;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+        .credit-card-number:focus {
+            box-shadow: none;
+            border: 2px solid #0d8fa9;
+        }
+
+    .visa-icon {
+        position: relative;
+        top: 42px;
+        right: 14px;
+        z-index: 30;
+    }
+
+    .expiry-class {
+        width: 120px;
+        border: 2px solid #ced4da;
+        font-weight: 600;
+        font-size: 12px;
+        height: 48px;
+    }
+
+        .expiry-class:focus {
+            box-shadow: none;
+            border: 2px solid #0d8fa9;
+        }
+
+    .cvv-class {
+        width: 120px;
+        border: 2px solid #ced4da;
+        font-weight: 600;
+        font-size: 12px;
+        height: 48px;
+    }
+
+        .cvv-class:focus {
+            box-shadow: none;
+            border: 2px solid #0d8fa9;
+        }
+
+    .payment-btn {
+        background-color: #0d8fa9;
+        padding: 15px;
+        padding-left: 25px;
+        padding-right: 25px;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 12px;
+    }
+
+        .payment-btn:hover {
+            box-shadow: none;
+            color: #fff;
+        }
+
+    .cancel-btn {
+        background-color: #fff;
+        color: #b2b2b2;
+        padding: 0px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+        .cancel-btn:hover {
+            border: 2px solid #b2b2b2;
+            color: #b2b2b2;
+        }
+
+        .cancel-btn:focus {
+            box-shadow: none;
+        }
+
+    .label-text-cc-number {
+        position: relative;
+        top: 4px;
+    }
+</style>

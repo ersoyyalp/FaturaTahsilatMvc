@@ -1,0 +1,73 @@
+﻿@model List<FaturaBilgi>
+@using ProjectAspNetCore.Enums;
+@{ int status = 1;
+    if (ViewBag.Status != null)
+    {
+        status = ViewBag.Status;
+    } }
+
+<div class="row mt-5">
+    <div class="col-md-3">
+        <a asp-action="Ekle" asp-controller="Home" asp-area="Admin" class="btn btn-primary btn-sm">Yeni Fatura Oluştur</a>
+    </div>
+    <div class="col-md-9">
+        <form action="/Admin/Home/Index" method="get">
+            <select name="status" class="form-control" onchange="form.submit()" asp-items="Html.GetEnumSelectList<FaturaStatusEnum>()">
+                <option value="1">Hepsi</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-sm table-bordered table-hover mt-2">
+    <tr>
+        <th>Id</th>
+        <th>Kategorileri</th>
+        <th>Müşteri</th>
+        <th>Fatura Dönemi</th>
+        <th>Açıklama</th>
+
+
+        <th>Tutar</th>
+        <th style="text-align:center">Fatura Ödendi mi ?</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.Id</td>
+    <td>
+        <getirKategoriAd fatura-id="@item.Id">@item.Id</getirKategoriAd>
+    </td>
+    <td>@item.AppUserCustomer.Name @item.AppUserCustomer.SurName</td>
+
+    <td>@item.Ad</td>
+    <td>@item.Aciklama</td>
+    <td>@item.Fiyat TL</td>
+    <td style="text-align:center">
+        @if (item.FaturaOdendiMi == true)
+        {
+<i class="fas fa-check" style="color: forestgreen; font-size: 22px"></i> }
+else
+{
+<i class="fas fa-xmark" style="color: red; font-size: 22px"></i>}
+    </td>
+    <td>
+        <a asp-action="Sil" asp-controller="Home" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+        <a asp-action="Guncelle" asp-controller="Home" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+        @*<a asp-action="AtaKategori" asp-controller="Home" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-dark btn-sm">Ata Kategori</a>*@
+    </td>
+
+</tr>}
+</table>
+<script>
+    let options = document.getElementsByTagName('option')
+    let arr = Array.from(options)
+    arr.map((option) => {
+        if (option.value == @status) {
+            option.selected = true
+        }
+    })
+</script>
+

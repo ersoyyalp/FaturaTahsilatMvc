@@ -1,0 +1,161 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>KAYIT OL</title>
+</head>
+
+<style>
+    body {
+        background-color: #99d7d9;
+        display: grid;
+        place-items: center;
+        height: 100vh;
+    }
+
+    .selected {
+        background-color: #0d8fa9;
+        color: white;
+        border: 1px solid #8eb5b7;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /*
+
+    User tablosuna type alanı ekle user ve company olarak enum yapısı kullan.
+    FaturaBilgi Tablosuna user ve company kolanları ekle.
+
+    Rolleme gerekirse gerekli rolleri db oluşurken kaydet. Admin / Customer / Company rolleri tut.
+
+    */
+</style>
+
+<body>
+
+
+    <div class="card d-flex justify-content-center align-items-center p-5"
+         style="width: 800px; border-radius: 15px; min-height: 650px;">
+        <h4 class="text-center mb-5" style="letter-spacing: 1px;">
+            KAYIT OL - <span id="type-message">
+                Müşteri Olarak
+                Kayıt Olun
+            </span>
+        </h4>
+        <form class="w-100" method="post" action="/Home/Register">
+            <input class="d-none" type="text" id="type" name="Type">
+
+            <div class="d-flex mb-5" style="gap: 15px;">
+                <button type="button" onclick="changeSelected()" id="musteri" class="btn btn-light w-50 selected">
+                    Müşteri
+                </button>
+                <button type="button" onclick="changeSelected()" id="kurum" class="btn btn-light w-50 ">Kurum</button>
+            </div>
+            <div class="form-group">
+
+                <input type="text" name="Name" class="form-control" id="name" placeholder="Ad">
+            </div>
+            <div class="form-group" id="surnameDiv">
+                <input type="text" name="Surname" class="form-control" id="surname" placeholder="Soyad">
+            </div>
+            <div class="form-group">
+                <input type="text" name="Username" class="form-control" id="username" placeholder="Abone No">
+            </div>
+            <div class="form-group">
+                <input type="email" name="Mail" class="form-control" id="mail" placeholder="Mail Adresi">
+            </div>
+            <div style="display:none" class="form-group" id="categoryDiv">
+                <select class="form-control" name="CategoryId">
+                    @foreach (var item in ViewBag.CategoryList)
+                    {
+        <option value="@item.Id">@item.Ad</option>
+}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="password" name="Password" class="form-control" id="password" placeholder="Şifre">
+            </div>
+            <div class="form-group">
+                <input type="password" name="PasswordAgain" onkeyup="check()" class="form-control" id="password-again"
+                       placeholder="Şifre Tekrar">
+            </div>
+            @*<input type="checkbox" name="IsAdmin" value="Admin Ol (DEV Ortam)" />*@
+            <div class="form-group row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-info mb-2" style="background-color:#0bb2d4;color:white;width:100%;" >Kayıt Ol</button>
+            </div>
+            <a type="submit" asp-action="GirisYap" asp-controller="Home" class="" style="color:#0d8fa9;width:100%;text-align:right;font-size:110%" >Mevcut Hesapla Giriş Yap</a>
+        </form>
+    </div>
+
+</body>
+
+<script>
+
+    const name = document.getElementById("name");
+    const username = document.getElementById("username");
+    const surnameDiv = document.getElementById("surnameDiv");
+    const categoryDiv = document.getElementById("categoryDiv");
+    const type = document.getElementById("type");
+    const typeMessage = document.getElementById("type-message");
+
+    const password = document.getElementById("password");
+    const passwordAgain = document.getElementById("password-again");
+
+    type.nodeValue = "1";
+
+
+    function check() {
+        if (password.value ==
+            passwordAgain.value) {
+            passwordAgain.style.borderColor = "green";
+        } else {
+            passwordAgain.style.borderColor = "red";
+        }
+    }
+
+    function changeSelected() {
+        var musteri = document.getElementById("musteri");
+        var kurum = document.getElementById("kurum");
+        if (musteri.classList.contains("selected")) {
+            musteri.classList.remove("selected");
+            kurum.classList.add("selected");
+            setTimeout(function () {
+                name.placeholder = "Kurum Adı";
+                username.placeholder = "Kurum No";
+                surnameDiv.style.display = "none";
+                categoryDiv.style.display = "block";
+                type.nodeValue = "1";
+                typeMessage.innerHTML = "Kurum Olarak Kayıt Olun";
+            }, 200);
+            clearAllInputs()
+        } else {
+            kurum.classList.remove("selected");
+            musteri.classList.add("selected");
+            setTimeout(function () {
+                name.placeholder = "Ad";
+                username.placeholder = "Tc Kimlik No";
+                surnameDiv.style.display = "block";
+                categoryDiv.style.display = "none";
+                type.nodeValue = "2";
+                typeMessage.innerHTML = "Müşteri Olarak Kayıt Olun";
+            }, 200);
+            clearAllInputs()
+        }
+    }
+
+    function clearAllInputs() {
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach(input => {
+            input.value = "";
+        });
+    }
+</script>
+
+</html>

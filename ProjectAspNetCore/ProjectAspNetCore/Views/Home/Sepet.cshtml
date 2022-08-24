@@ -1,0 +1,76 @@
+﻿@model List<FaturaBilgi>
+
+@{ decimal toplamFiyat = 0;
+    string faturaIds = "";
+
+    if (Model != null)
+    {
+        toplamFiyat = Model.Sum(I => I.Fiyat);
+
+        List<int> vs = Model.Select(x => x.Id).ToList();
+        for (int i = 0; i < vs.Count; i++)
+        {
+            if (i == 0)
+                faturaIds += vs[i];
+            else
+                faturaIds += $",{vs[i]}";
+        }
+
+    } }
+@if (Model != null)
+{
+<div>
+    <div class="card" style=" background-color: #d1f5f6;">
+        <h5 class="card-header" style=" background-color: #b4e9ea; box-shadow:0px 6px 15px #51bbd0;">Tutar Bilgileri</h5>
+        <div class="card-body">
+            <p class="card-text">Toplam Fatura Tutarı: @toplamFiyat TL</p>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-warning">Faturalarıma Dön</a>
+
+            <a asp-action="SepetiBosalt" asp-controller="Home" asp-route-faturaIds="@faturaIds" class="btn btn-primary" style="background-color:#0d8fa9; color:white">Ödeme Yap</a>
+
+        </div>
+    </div>
+    <br />
+    <h4 class="card-header my-1 w-50" style="border-radius:10px;  text-align: center; background-color: #b4e9ea; box-shadow: 0px 6px 15px #51bbd0;">Faturalar</h4>
+    @foreach (var item in Model)
+    {
+
+<div class="card my-1 w-50" style=" background-color: #b4e9ea; box-shadow:0px 6px 15px #51bbd0;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            @*<img src="/img/@item.Resim" class="img-fluid rounded-start" alt="@item.Ad">*@
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">@item.Aciklama</h5>
+                <br />
+                <div class="position-absolute d-flex justify-content-center align-items-center" style="top:10px; right:25px">
+                    <p class="card-text"><h5>Tutar: @item.Fiyat TL</h5></p>
+                </div>
+                <div class="position-absolute d-flex justify-content-center align-items-center" style="bottom:15px;">
+                    <h6 class="card-text">@item.Ad</h6>
+                </div>
+
+                <div class="position-absolute d-flex justify-content-center align-items-center" style="bottom:10px; right:12px">
+                    <a asp-action="SepettenCikar" asp-controller="Home" asp-route-id="@item.Id" style="color:#06667a">Ödeme Kuyruğundan Kaldır</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>}
+
+</div> }
+else
+{
+<div class="card text-center">
+  
+    <div class="card-body" style=" background-color: #d1f5f6;  box-shadow: 0px 6px 15px #51bbd0;">
+        <h5 class="card-title">Fatura</h5>
+        <p class="card-text" >Henüz ödenecek bir fatura eklemediniz.</p>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary"  style="background-color:#0d8fa9; color:white">Faturalarıma Dön</a>
+    </div>
+    @*<div class="card-footer text-muted">
+            İyi Alışverişler
+        </div>*@
+</div>}

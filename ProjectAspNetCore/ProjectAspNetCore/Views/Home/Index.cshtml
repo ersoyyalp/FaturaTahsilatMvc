@@ -1,0 +1,66 @@
+﻿@model List<FaturaBilgi>
+
+@if (TempData["bildirim"] != null)
+{
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+   @TempData["bildirim"].ToString()
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+</div>}
+
+<div class="row">
+    <div class="col-md-3">
+        @await Component.InvokeAsync("KategoriList")
+    </div>
+    <div class="col-md-9">
+        
+        <div class="row">
+            <h6 class="text-bg-light fw-semibold" style="margin-left:5px"> @ViewBag.KategoriAd İçin Sonuçlar <b>@Model.Count</b> Adet Fatura Bulundu </h6>
+            @if (Model.Count > 0)
+            {
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12">
+           
+            <div class="card m-lg-1 mb-1 position-relative">
+                @*<img src="/img/@item.Resim" class="card-img-top" alt="Resim Yok">*@
+                <div class="card-body">
+                   
+                    <h5 class="card-title"><strong>Ekstre Dönemi:</strong> @item.Ad</h5>
+                    <p class="card-text">Borcunuz: @item.Fiyat  TL</p>
+                    <a asp-action="FaturaDetay" asp-controller="Home"
+                       asp-route-id="@item.Id" class="btn btn-primary float-right">Detay Göster</a>
+                    <br>
+
+
+                    @if (item.FaturaOdendiMi == true)
+                    {
+        <div class="position-absolute d-flex justify-content-center align-items-center" style="top:15px; right:15px">
+            <b class="mx-1">ÖDENDİ</b>  <i style="color:springgreen" class="fas fa-check fa-2x"></i>
+        </div>}
+                    @if (item.FaturaOdendiMi == false)
+                    {
+        <div class="position-absolute d-flex justify-content-center align-items-center" style="top:15px; right:15px">
+            <b class="mx-1">ÖDENMEDİ</b>  <i style="color:orangered" class="fas fa-xmark fa-2x "></i>
+        </div>}
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>} }
+else
+{
+    <div class="alert alert-info text-center">
+        Görüntülenecek Kayıt Bulunamadı.
+    </div>}
+        </div>
+    </div>
+</div>
+
+
+
+

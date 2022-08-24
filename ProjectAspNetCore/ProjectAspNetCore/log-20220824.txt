@@ -1,0 +1,8 @@
+2022-08-24 17:38:48.986 +03:00 [INF] Uygulama Başlatılıyor
+2022-08-24 17:38:53.501 +03:00 [INF] User profile is available. Using 'C:\Users\ALP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-08-24 17:38:54.217 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-24 17:38:54.217 +03:00 [INF] Hosting environment: Development
+2022-08-24 17:38:54.217 +03:00 [INF] Content root path: C:\Users\ALP\OneDrive\Masaüstü\VakıfBankProje\ProjectAspNetCore\ProjectAspNetCore
+2022-08-24 17:38:54.294 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:56903/  
+2022-08-24 17:38:54.400 +03:00 [INF] Executing endpoint 'ProjectAspNetCore.Controllers.HomeController.Register (ProjectAspNetCore)'
+2022-08-24 17:38:54.458 +03:00 [INF] Route matched with {action = "Register", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Register() on controller ProjectAspNetCore.Controllers.HomeController (ProjectAspNetCore).

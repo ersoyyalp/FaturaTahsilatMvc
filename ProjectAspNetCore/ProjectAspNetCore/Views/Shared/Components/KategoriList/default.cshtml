@@ -1,0 +1,35 @@
+﻿@model List<FaturaKategori>
+@using ProjectAspNetCore.Enums
+
+@{ 
+    int odenmisId = (int)FaturaStatusEnum.Ödenmis;
+    int odenmemisId = (int)FaturaStatusEnum.Ödenmemis;
+}
+
+<div class="list-group">
+    <a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action
+           @(ViewBag.KategoriId == null ? "active" : "")" aria-current="true" style="background-color:#0d8fa9;">
+        Tüm Kategoriler
+    </a>
+    @foreach (var kategori in Model)
+    {
+<a asp-action="Index" asp-controller="Home" asp-route-kategoriId="@kategori.Id" asp-route-kategori="@kategori.Ad" class="list-group-item list-group-item-action
+           @(ViewBag.KategoriId?.ToString() == kategori.Id.ToString() ? "active" : "")" aria-current="true">
+    @kategori.Ad
+</a>}
+
+
+</div>
+<div class="list-group">
+    @*<a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action
+           @(ViewBag.KategoriId == null ? "active" : "")" aria-current="true">
+        Faturalarım
+    </a>*@
+    <br />
+    <a asp-action="Index" asp-controller="Home" asp-route-kategoriId="@odenmisId "
+       class="list-group-item list-group-item-action @(ViewBag.KategoriId== (int)FaturaStatusEnum.Ödenmis ? "active":"")"
+       aria-current="true">Ödenmiş</a>
+    <a asp-action="Index" asp-controller="Home" asp-route-kategoriId="@odenmemisId"
+       class="list-group-item list-group-item-action @(ViewBag.KategoriId== (int)FaturaStatusEnum.Ödenmemis ? "active":"")"
+       aria-current="true">Ödenmemiş</a>
+</div>
